@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laptop Takeoff Simulator</title>
+  <title>Laptop Lag Simulator</title>
   <style>
     * {
       margin: 0;
@@ -12,14 +12,17 @@
     }
     body {
       background: black;
-      color: white;
-      font-family: 'Arial', sans-serif;
       overflow: hidden;
+      color: white;
+      font-family: Arial, sans-serif;
     }
-    .frenzy {
+    .chaos {
       position: absolute;
-      animation: spin 0.1s linear infinite, bounce 0.5s ease-in-out infinite alternate;
+      font-size: 2rem;
+      color: hsl(calc(360 * var(--hue)), 100%, 50%);
+      animation: spin 0.5s linear infinite, bounce 1s ease-in-out infinite alternate;
     }
+
     @keyframes spin {
       from {
         transform: rotate(0deg);
@@ -28,12 +31,13 @@
         transform: rotate(360deg);
       }
     }
+
     @keyframes bounce {
       from {
         transform: translateY(0);
       }
       to {
-        transform: translateY(100vh);
+        transform: translateY(90vh);
       }
     }
   </style>
@@ -41,47 +45,52 @@
 <body>
   <canvas id="canvas"></canvas>
   <script>
-    // Canvas Setup for Graphical Overkill
+    // Setup the canvas for insane rendering
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    function drawRandomShapes() {
-      for (let i = 0; i < 500; i++) {
+    function drawShapes() {
+      for (let i = 0; i < 300; i++) {
         ctx.beginPath();
-        ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 50, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.5)`;
+        ctx.arc(
+          Math.random() * canvas.width,
+          Math.random() * canvas.height,
+          Math.random() * 50,
+          0,
+          Math.PI * 2
+        );
+        ctx.fillStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
         ctx.fill();
       }
     }
 
-    function renderLoop() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawRandomShapes();
-      requestAnimationFrame(renderLoop);
+    function render() {
+      drawShapes();
+      requestAnimationFrame(render);
     }
+    render();
 
-    renderLoop();
-
-    // Add Frenzied Div Elements
+    // Create DOM Chaos with animated elements
     setInterval(() => {
       const div = document.createElement('div');
-      div.textContent = '🔥';
+      div.textContent = '💥';
       div.style.left = `${Math.random() * 100}vw`;
       div.style.top = `${Math.random() * 100}vh`;
-      div.style.fontSize = `${Math.random() * 50 + 10}px`;
-      div.classList.add('frenzy');
+      div.style.fontSize = `${Math.random() * 40 + 10}px`;
+      div.style.setProperty('--hue', Math.random());
+      div.classList.add('chaos');
       document.body.appendChild(div);
 
-      // Auto-cleanup to prevent memory death
-      setTimeout(() => div.remove(), 5000);
-    }, 50);
+      // Cleanup after 3 seconds to avoid permanent freeze
+      setTimeout(() => div.remove(), 3000);
+    }, 10);
 
-    // Computational Havoc
+    // Heavy computation for CPU overload
     function computeIntensive() {
-      for (let i = 0; i < 1e7; i++) {
-        Math.sqrt(Math.random() * i);
+      for (let i = 0; i < 1e6; i++) {
+        Math.pow(Math.random(), Math.random());
       }
       requestAnimationFrame(computeIntensive);
     }
